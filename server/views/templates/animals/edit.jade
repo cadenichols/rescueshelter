@@ -1,0 +1,52 @@
+extends ../../layouts/master
+block content
+
+  .btn-toolbar(role='toolbar')
+    .btn-group(role='group')
+      form(method='post', action='/animals/#{animal._id}/delete')
+        button.btn.btn-danger(type='submit'): i.fa.fa-times
+    .btn-group(role='group')
+      a.btn.btn-default(href='/animals/#{animal._id}'): i.fa.fa-desktop
+    .btn-group(role='group')
+      a.btn.btn-default(href='/animals/new'): i.fa.fa-plus
+    .btn-group(role='group')
+      a.btn.btn-default(href='/animals'): i.fa.fa-paw
+
+  h3 Edit Animal
+  
+  .row
+    .col-xs-4
+      form(method='post', action='/animals/#{animal._id}')
+        .form-group
+          label(for='name') Name
+          input#name.form-control(type='text', name='name', autofocus=true, value=animal.name)
+        .form-group
+          label(for='description') Description
+          textarea#description.form-control(rows='5', name='description')= animal.description
+        .form-group
+          label(for='photo') Photo
+          input#photo.form-control(type='url', name='photo', value=animal.photo)
+        .form-group
+          label(for='age') Age
+          input#age.form-control(type='number', name='age', value=animal.age)
+        .form-group
+          label Gender
+          .radio
+            label
+              input(type='radio', name='gender', value='male', checked=animal.gender === 'male')
+              span Male
+          .radio
+            label
+              input(type='radio', name='gender', value='female', checked=animal.gender === 'female')
+              span Female
+        .form-group
+          label(for='species') Species
+          select#species.form-control(name='species')
+            each s in species
+              option(selected=animal.species === s)= s
+        .form-group
+          label(for='breed') Breed
+          input#breed.form-control(type='text', name='breed', value=animal.breed)
+        .form-group
+          button.btn.btn-default(type='submit') Edit Animal
+    .col-xs-8

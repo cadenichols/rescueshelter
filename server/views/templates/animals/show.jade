@@ -1,0 +1,43 @@
+extends ../../layouts/master
+block content
+
+  .btn-toolbar(role='toolbar')
+    .btn-group(role='group')
+      form(method='post', action='/animals/#{animal._id}/delete')
+        button.btn.btn-danger(type='submit'): i.fa.fa-times
+    .btn-group(role='group')
+      a.btn.btn-default(href='/animals/#{animal._id}/edit'): i.fa.fa-pencil-square-o
+    .btn-group(role='group')
+      a.btn.btn-default(href='/animals/new'): i.fa.fa-plus
+    .btn-group(role='group')
+      a.btn.btn-default(href='/animals'): i.fa.fa-paw
+
+  if(!animal.isAdopted)
+    h3 Adopt Animal
+    form.form-inline(method='post', action='/animals/#{animal._id}/adopt')
+      .form-group
+        select#clientId.form-control.input-sm(name='clientId')
+          each client in clients
+            option(value=client._id)= client.name
+      .form-group
+        button.btn.btn-primary.btn-sm(type='submit') Adopt
+
+  h3 Detail View
+
+  .page-header
+    h1= animal.name
+  p= animal.description 
+  
+  table.table
+    thead
+      tr
+        th Gender
+        th Age
+        th Species
+        th Breed
+    tbody
+      tr
+        td= animal.gender
+        td= animal.age
+        td= animal.species
+        td= animal.breed
